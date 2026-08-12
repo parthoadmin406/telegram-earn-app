@@ -243,7 +243,9 @@ app.post("/api/admin/ads", admin, (req, res) => {
   res.json(db.ads);
 });
 
-app.get("*", (req, res) => {
+// Express 5-compatible fallback route.
+app.use((req, res, next) => {
+  if (req.method !== "GET") return next();
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
